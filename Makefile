@@ -13,7 +13,7 @@
 NAME_1 = checker
 NAME_2 = push_swap
 DIR_LIB = libft
-HEADER = push_swap.h
+#HEADER = push_swap.h
 SRC_1 = checker.c
 SRC_2 = push_swap.c
 BINARIES_1 = $(SRC_1:.c=.o)
@@ -22,13 +22,15 @@ CC = gcc -Wall -Werror -Wextra
 
 all: $(NAME_1) $(NAME_2)
 
-$(NAME_1): $(BINARIES_1) $(DIR_LIB)
-	$(CC) -g $(BINARIES_1) -o $(NAME_1) -I libft/includes -L$(DIR_LIB) -lft
+$(NAME_1): $(DIR_LIB) $(BINARIES_1)
+	$(CC) -g $(BINARIES_1) -o $(NAME_1) -I libft/includes -L $(DIR_LIB) -lft
 
-$(NAME_2): $(BINARIES_2) $(DIR_LIB)
-	$(CC) -g $(BINARIES_2) -o $(NAME_2) -I libft/includes -L$(DIR_LIB) -lft
+$(NAME_2): $(DIR_LIB) $(BINARIES_2)
+	$(CC) -g $(BINARIES_2) -o $(NAME_2) -I libft/includes -L $(DIR_LIB) -lft
 
-$(DIR_LIB):
+$(DIR_LIB): libft.a
+
+libft.a:
 	$(MAKE) -C $(DIR_LIB)
 
 %.o: %.c
