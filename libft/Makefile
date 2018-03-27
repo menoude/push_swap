@@ -10,8 +10,7 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME = 		libft.a
-
+NAME	=	libft.a
 SOURCES = 	ft_lstdelone.c ft_strnequ.c ft_strclr.c ft_strdel.c ft_strncmp.c \
 			ft_putendl_fd.c ft_putnbr_fd.c ft_strsplit.c ft_itoa.c ft_putchar.c \
 			ft_strjoin.c ft_strtrim.c ft_putendl.c ft_putchar_fd.c ft_putstr_fd.c \
@@ -29,14 +28,14 @@ SOURCES = 	ft_lstdelone.c ft_strnequ.c ft_strclr.c ft_strdel.c ft_strncmp.c \
 			ft_printf_length.c ft_printf_type.c ft_printf_type_dec.c \
 			ft_printf_type_chars.c ft_printf_type_base.c ft_printf_type_others.c \
 			ft_atoi_long.c
-
 BINARIES =	$(SOURCES:.c=.o)
-
-$(NAME):
-	gcc -Wall -Werror -Wextra -c $(SOURCES) -I includes/
-	ar rcs libft.a $(BINARIES)
+CC		 = 	gcc -Wall -Werror -Wextra
 
 all: $(NAME)
+
+$(NAME):
+	$(CC) -c $(SOURCES) -I includes/
+	ar rcs libft.a $(BINARIES)
 
 clean:
 	rm -f $(BINARIES)

@@ -14,11 +14,11 @@ NAME_1 = checker
 NAME_2 = push_swap
 DIR_LIB = libft
 #HEADER = push_swap.h
-SRC_1 = checker.c
+SRC_1 = checker.c args.c numbers.c 
 SRC_2 = push_swap.c
 BINARIES_1 = $(SRC_1:.c=.o)
 BINARIES_2 = $(SRC_2:.c=.o)
-CC = gcc -Wall -Werror -Wextra
+CC = gcc -g -Wall -Werror -Wextra #enlever le -g
 
 all: $(NAME_1) $(NAME_2)
 
