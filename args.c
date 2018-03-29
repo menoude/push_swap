@@ -1,78 +1,99 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   args.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: meyami <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/03/29 15:07:51 by meyami            #+#    #+#             */
+/*   Updated: 2018/03/29 15:11:49 by meyami           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
-static int args_no_duplicates(t_stack *a, int nb_saved, int next_nb)
+void			args_free(char **args)
 {
 	int i;
 
 	i = 0;
-	while (i < nb_saved)
+	while (args[i])
 	{
-		if (a->nb[i] == next_nb)
-			return (0);
+		free(args[i]);
 		i++;
 	}
-	return (1);
+	free(args);
 }
 
-static void args_finalize(t_stack *a, char **args, int to_free)
+void			args_init_stacks(t_stack *a, t_stack *b,
+								char **args, int to_free)
 {
-	int i;
+	b->memory = a->memory;
+	if (!(a->nb = ft_memalloc(sizeof(int) * a->memory)))
+	{
+		if (to_free)
+			error_message_free_args(args);
+	}
+	else if (!(b->nb = ft_memalloc(sizeof(int) * b->memory)))
+	{
+		if (to_free)
+			error_message_free_args(args);
+		free(a->nb);
+	}
+	a->size = 0;
+	b->size = 0;
+}
+
+static void		args_finalize(t_stack *a, t_stack *b, char **args, int to_free)
+{
 	int next_nb;
 
-	a->nb = ft_memalloc(sizeof(int) * a->size);
-	i = -1;
-	while (++i < a->size)
+	args_init_stacks(a, b, args, to_free);
+	while (a->size < a->memory)
 	{
-		next_nb = ft_atoi(args[i]);
-		if (!args_no_duplicates(a, i, next_nb))
+		next_nb = ft_atoi(args[a->size]);
+		if (stack_contains(a, next_nb))
 		{
 			free(a->nb);
 			if (to_free)
-				error_message_free_args(args);
-			else
-				error_message();
+				args_free(args);
+			error_message();
 		}
-		a->nb[i] = next_nb;
+		stack_push(a, next_nb);
 	}
 	if (to_free)
-	{
-		i = -1;
-		while (args[++i])
-			free(args[i]);
-		free(args);
-	}
+		args_free(args);
 }
 
-void	args_check_single(t_stack *a, char **argv)
+void			args_check_single(t_stack *a, t_stack *b, char **argv)
 {
 	char		**tab;
-	int			k;
 	int			i;
 	long int	n;
 
 	if (!(tab = ft_strsplit(argv[1], ' ')))
 		error_message();
-	k = 0;
-	while (tab[k])
+	a->memory = 0;
+	while (tab[a->memory])
 	{
 		i = 0;
-		while (tab[k][i])
+		while (tab[a->memory][i])
 		{
-			if (!ft_isdigit(tab[k][i]) && !(i == 0 && tab[k][i] == '-'
-											&& tab[k][i + 1]))
+			if (!ft_isdigit(tab[a->memory][i])
+				&& !(i == 0 && tab[a->memory][i] == '-'
+					&& tab[a->memory][i + 1]))
 				error_message_free_args(tab);
 			i++;
 		}
-		n = ft_atoi_long(tab[k]);
+		n = ft_atoi_long(tab[a->memory]);
 		if ((n > 0 && n > 2147483647) || (n < 0 && n < -2147483648))
 			error_message_free_args(tab);
-		k++;
-		a->size++;
+		a->memory++;
 	}
-	args_finalize(a, tab, 1);
+	args_finalize(a, b, tab, 1);
 }
 
-void	args_check_multi(t_stack *a, char **argv)
+void			args_check_multi(t_stack *a, t_stack *b, char **argv)
 {
 	int			k;
 	int			i;
@@ -93,7 +114,7 @@ void	args_check_multi(t_stack *a, char **argv)
 		if ((n > 0 && n > 2147483647) || (n < 0 && n < -2147483648))
 			error_message();
 		k++;
-		a->size++;
+		a->memory++;
 	}
-	args_finalize(a, argv + 1, 0);
+	args_finalize(a, b, argv + 1, 0);
 }

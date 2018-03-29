@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   stack.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: meyami <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/03/29 15:07:26 by meyami            #+#    #+#             */
+/*   Updated: 2018/03/29 15:07:28 by meyami           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
 int		stack_pop(t_stack *stack)
@@ -45,13 +57,5 @@ int		stack_is_ordered(t_stack *stack)
 			return (0);
 		i++;
 	}
-	return (1);
-}
-
-int		stack_init(t_stack *stack, int size)
-{
-	if (!(stack->nb = ft_memalloc(sizeof(int) * size)))
-		return(0);
-	stack->size = size;
 	return (1);
 }

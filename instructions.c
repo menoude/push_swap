@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   instructions.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: meyami <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/03/29 15:13:01 by meyami            #+#    #+#             */
+/*   Updated: 2018/03/29 15:13:22 by meyami           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
-static void instructions_check(t_stack *a, t_stack *b, char *new_instruct)
+static void	instructions_check(t_stack *a, t_stack *b, char *new_instruct)
 {
 	if (ft_strequ(new_instruct, "sa") || ft_strequ(new_instruct, "sb")
-		|| ft_strequ(new_instruct, "sb"))
+		|| ft_strequ(new_instruct, "ss"))
 		op_swap(a, b, new_instruct[1]);
 	else if (ft_strequ(new_instruct, "pa") || ft_strequ(new_instruct, "pb"))
 		op_push(a, b, new_instruct[1]);
@@ -17,7 +29,7 @@ static void instructions_check(t_stack *a, t_stack *b, char *new_instruct)
 		error_message_free_stacks(a, b);
 }
 
-void	instructions_read(t_stack *a, t_stack *b)
+void		instructions_read(t_stack *a, t_stack *b)
 {
 	char *instruct;
 
