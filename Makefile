@@ -13,8 +13,8 @@
 NAME_1 = checker
 NAME_2 = push_swap
 DIR_LIB = libft
-#HEADER = push_swap.h
-SRC_1 = checker.c args.c stack.c instructions.c operations.c
+SRC_1 = checker.c args.c stack.c instructions.c operations.c \
+		print_a_enlever.c # A ENLEVER
 SRC_2 = push_swap.c
 BINARIES_1 = $(SRC_1:.c=.o)
 BINARIES_2 = $(SRC_2:.c=.o)

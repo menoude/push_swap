@@ -33,6 +33,7 @@ int		stack_is_ordered(t_stack *stack);
 int		stack_init(t_stack *stack);
 
 void	instructions_read(t_stack *a, t_stack *b);
+void	instructions_exec(t_stack *a, t_stack *b, char *new_instruct);
 
 void	op_swap(t_stack *a, t_stack *b, char option);
 void	op_push(t_stack *a, t_stack *b, char option);

@@ -12,7 +12,7 @@
 
 #include "push_swap.h"
 
-static void	instructions_check(t_stack *a, t_stack *b, char *new_instruct)
+void	instructions_exec(t_stack *a, t_stack *b, char *new_instruct)
 {
 	if (ft_strequ(new_instruct, "sa") || ft_strequ(new_instruct, "sb")
 		|| ft_strequ(new_instruct, "ss"))
@@ -36,7 +36,7 @@ void		instructions_read(t_stack *a, t_stack *b)
 	instruct = 0;
 	while (get_next_line(0, &instruct) > 0)
 	{
-		instructions_check(a, b, instruct);
+		instructions_exec(a, b, instruct);
 		print_stacks(a, b);
 		free(instruct);
 	}
