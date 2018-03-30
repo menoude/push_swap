@@ -13,20 +13,19 @@
 NAME_1 = checker
 NAME_2 = push_swap
 DIR_LIB = libft
-SRC_1 = checker.c args.c stack.c instructions.c operations.c \
+SRC = error.c args.c stack.c instructions.c operations.c \
+		sort.c \
 		print_a_enlever.c # A ENLEVER
-SRC_2 = push_swap.c
-BINARIES_1 = $(SRC_1:.c=.o)
-BINARIES_2 = $(SRC_2:.c=.o)
+BINARIES = $(SRC:.c=.o)
 CC = gcc -g -Wall -Werror -Wextra #enlever le -g
 
 all: $(NAME_1) $(NAME_2)
 
-$(NAME_1): $(DIR_LIB) $(BINARIES_1)
-	$(CC) -g $(BINARIES_1) -o $(NAME_1) -I libft/includes -L $(DIR_LIB) -lft
+$(NAME_1): $(DIR_LIB) checker.o $(BINARIES)
+	$(CC) checker.o $(BINARIES) -o $(NAME_1) -I libft/includes -L $(DIR_LIB) -lft
 
-$(NAME_2): $(DIR_LIB) $(BINARIES_2)
-	$(CC) -g $(BINARIES_2) -o $(NAME_2) -I libft/includes -L $(DIR_LIB) -lft
+$(NAME_2): $(DIR_LIB) push_swap.o $(BINARIES)
+	$(CC) push_swap.o $(BINARIES) -o $(NAME_2) -I libft/includes -L $(DIR_LIB) -lft
 
 $(DIR_LIB): libft.a
 
@@ -38,7 +37,7 @@ libft.a:
 
 clean:
 	$(MAKE) -C $(DIR_LIB) clean
-	/bin/rm -f $(BINARIES_1) $(BINARIES_2)
+	/bin/rm -f $(BINARIES) checker.o push_swap.o
 fclean: clean
 	$(MAKE) -C $(DIR_LIB) fclean
 	/bin/rm -f $(NAME_1) $(NAME_2)

@@ -21,3 +21,17 @@ void	print_stacks(t_stack *a, t_stack *b)  // A ENLEVER
 	}
 	ft_putstr("\n\n");
 }
+
+void	print_set(int *set, char *name, int size)
+{
+	int i;
+
+	ft_printf("set %s of size %d\n", name, size);
+	i = 0;
+	while (i < size)
+	{
+		ft_printf("%d, ", set[i]);
+		i++;
+	}
+	ft_putstr("\n\n");
+}

@@ -14,6 +14,7 @@ typedef struct	s_stack
 ///////////////////////////////////
 
 void print_stacks(t_stack *a, t_stack *b);
+void	print_set(int *set, char *name, int size);
 
 ////////////////////////////////////
 
@@ -33,11 +34,13 @@ int		stack_is_ordered(t_stack *stack);
 int		stack_init(t_stack *stack);
 
 void	instructions_read(t_stack *a, t_stack *b);
-void	instructions_exec(t_stack *a, t_stack *b, char *new_instruct);
+void	instructions_exec(t_stack *a, t_stack *b, char *new_instruct, int print);
 
 void	op_swap(t_stack *a, t_stack *b, char option);
 void	op_push(t_stack *a, t_stack *b, char option);
 void	op_rotate(t_stack *a, t_stack *b, char option);
 void	op_reverse_rotate(t_stack *a, t_stack *b, char option);
+
+void	sort_start(t_stack *a, t_stack *b);
 
 #endif

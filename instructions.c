@@ -12,7 +12,7 @@
 
 #include "push_swap.h"
 
-void	instructions_exec(t_stack *a, t_stack *b, char *new_instruct)
+void	instructions_exec(t_stack *a, t_stack *b, char *new_instruct, int print)
 {
 	if (ft_strequ(new_instruct, "sa") || ft_strequ(new_instruct, "sb")
 		|| ft_strequ(new_instruct, "ss"))
@@ -26,7 +26,15 @@ void	instructions_exec(t_stack *a, t_stack *b, char *new_instruct)
 			|| ft_strequ(new_instruct, "rrr"))
 		op_reverse_rotate(a, b, new_instruct[2]);
 	else
+	{
 		error_message_free_stacks(a, b);
+		print = 'n';
+	}
+	if (print == 'y')
+	{
+		ft_putendl(new_instruct);
+		print_stacks(a, b);
+	}
 }
 
 void		instructions_read(t_stack *a, t_stack *b)
@@ -36,8 +44,7 @@ void		instructions_read(t_stack *a, t_stack *b)
 	instruct = 0;
 	while (get_next_line(0, &instruct) > 0)
 	{
-		instructions_exec(a, b, instruct);
-		print_stacks(a, b);
+		instructions_exec(a, b, instruct, 'n');
 		free(instruct);
 	}
 }
