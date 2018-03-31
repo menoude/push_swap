@@ -1,6 +1,7 @@
 #include "push_swap.h"
 
-static int	sort_find_rank(int *set, int size, int middle, int pivot)
+static int	sort_find_median(int *set, int start, int end, int median_pos,
+														int pivot)
 {
 	int	left[size];
 	int	right[size];
@@ -10,34 +11,34 @@ static int	sort_find_rank(int *set, int size, int middle, int pivot)
 
 	left_size = 0;
 	right_size = 0;
-	i = 0;
-	while (i < size)
+	i = start;
+	while (start <= end)
 	{
-		if (set[i] < pivot)
-			left[left_size++] = set[i];
-		else if (set[i] > pivot)
-			right[right_size++] = set[i];
-		i++;
+		if (set[start] < pivot)
+			left[left_size++] = set[start];
+		else if (set[start] > pivot)
+			right[right_size++] = set[start];
+		start++;
 	}
-	if (left_size == middle)
+	if (left_size == median_pos)
 		return (pivot);
-	else if (left_size > middle)
-		return (sort_find_rank(left, left_size, middle, left[middle]));
+	else if (left_size > median_pos)
+		return (sort_find_rank(left, left_size, median_pos, left[median_pos]));
 	else
 		return (sort_find_rank(right, right_size, middle - left_size - 1,
 									right[middle - left_size - 1]));
 }
 
-void		sort(t_stack *a, t_stack *b, int rank)
+void		sort(t_stack *a, t_stack *b, int start, int end)
 {
 	int rank_value;
 	int i;
 	int initial_size;
 
-	if (stack_is_ordered(a))
+	if (stack_is_ordered(a) || end - start <= 0)
 		return ;
-	initial_size = a->size;
-	rank_value = sort_find_rank(a->nb, a->size, rank, a->nb[rank]);
+	initial_size = end - start;
+	rank_value = sort_find_median(a->nb, start, end, (start + end) / 2, a->nb[end]);
 	ft_printf("--------------------\n value at rank %d is %d, the group contains %d elements\n--------------\n", rank, rank_value, initial_size);
 	i = 0;
 	while (i < initial_size)
