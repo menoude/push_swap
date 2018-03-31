@@ -35,6 +35,7 @@ void	instructions_exec(t_stack *a, t_stack *b, char *new_instruct, int print)
 		ft_putendl(new_instruct);
 		print_stacks(a, b);
 	}
+	counter++;
 }
 
 void		instructions_read(t_stack *a, t_stack *b)

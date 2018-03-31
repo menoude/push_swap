@@ -15,7 +15,7 @@ typedef struct	s_stack
 
 void print_stacks(t_stack *a, t_stack *b);
 void	print_set(int *set, char *name, int size);
-
+int counter;
 ////////////////////////////////////
 
 void	error_message(void);
@@ -41,6 +41,6 @@ void	op_push(t_stack *a, t_stack *b, char option);
 void	op_rotate(t_stack *a, t_stack *b, char option);
 void	op_reverse_rotate(t_stack *a, t_stack *b, char option);
 
-void	sort_start(t_stack *a, t_stack *b);
+void	sort(t_stack *a, t_stack *b, int rank);
 
 #endif

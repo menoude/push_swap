@@ -1,6 +1,6 @@
 #include "push_swap.h"
 
-static int	sort_find_median(int *set, int size, int middle, int pivot)
+static int	sort_find_rank(int *set, int size, int middle, int pivot)
 {
 	int	left[size];
 	int	right[size];
@@ -22,18 +22,32 @@ static int	sort_find_median(int *set, int size, int middle, int pivot)
 	if (left_size == middle)
 		return (pivot);
 	else if (left_size > middle)
-		return (sort_find_median(left, left_size, middle, left[middle]));
+		return (sort_find_rank(left, left_size, middle, left[middle]));
 	else
-		return (sort_find_median(right, right_size, middle - left_size - 1,
+		return (sort_find_rank(right, right_size, middle - left_size - 1,
 									right[middle - left_size - 1]));
 }
 
-void		sort_start(t_stack *a, t_stack *b)
+void		sort(t_stack *a, t_stack *b, int rank)
 {
-	int median;
+	int rank_value;
+	int i;
+	int initial_size;
 
-	median = sort_find_median(a->nb, a->size, a->size / 2, a->nb[a->size / 2]);
-	ft_printf("median = %d\n", median);
-	// instructions_exec(a, b, "pb", 'y');
-	(void)b;
+	if (stack_is_ordered(a))
+		return ;
+	initial_size = a->size;
+	rank_value = sort_find_rank(a->nb, a->size, rank, a->nb[rank]);
+	ft_printf("--------------------\n value at rank %d is %d, the group contains %d elements\n--------------\n", rank, rank_value, initial_size);
+	i = 0;
+	while (i < initial_size)
+	{
+		if (stack_peek(a) > rank_value)
+			instructions_exec(a, b, "pb", 'y');
+		else
+			instructions_exec(a, b, "ra", 'y');
+		i++;
+	}
+	while (b->size)
+		instructions_exec(a, b, "pa", 'y');
 }

@@ -12,6 +12,8 @@ int main(int argc, char **argv)
 	else if (argc > 2)
 		args_check_multi(&a, &b, argv);
 	print_stacks(&a, &b);
-	sort_start(&a, &b);
+  // counter = 0;
+	sort(&a, &b, a.size / 2);
+  // ft_printf("%d instructions\n", counter);
 	return (0);
 }
