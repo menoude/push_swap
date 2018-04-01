@@ -41,6 +41,6 @@ void	op_push(t_stack *a, t_stack *b, char option);
 void	op_rotate(t_stack *a, t_stack *b, char option);
 void	op_reverse_rotate(t_stack *a, t_stack *b, char option);
 
-void	sort(t_stack *a, t_stack *b, int rank);
+void	subset_sort(t_stack *a, t_stack *b, int start, int len);
 
 #endif

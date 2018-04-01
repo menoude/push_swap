@@ -13,7 +13,7 @@ int main(int argc, char **argv)
 		args_check_multi(&a, &b, argv);
 	print_stacks(&a, &b);
   // counter = 0;
-	sort(&a, &b, 0, a->size);
+	subset_sort(&a, &b, 0, a.size);
   // ft_printf("%d instructions\n", counter);
 	return (0);
 }
