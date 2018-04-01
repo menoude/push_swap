@@ -46,6 +46,20 @@ int		stack_contains(t_stack *stack, int n)
 	return (0);
 }
 
+int		stack_contains_higher(t_stack *stack, int n)
+{
+	int i;
+
+	i = 0;
+	while (i < stack->size)
+	{
+		if (stack->nb[i] > n)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 int		stack_is_ordered(t_stack *stack)
 {
 	int i;
@@ -54,6 +68,20 @@ int		stack_is_ordered(t_stack *stack)
 	while (i + 1 < stack->size)
 	{
 		if (stack->nb[i] > stack->nb[i + 1])
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+int		stack_is_inverse_ordered(t_stack *stack)
+{
+	int i;
+
+	i = 0;
+	while (i + 1 < stack->size)
+	{
+		if (stack->nb[i] < stack->nb[i + 1])
 			return (0);
 		i++;
 	}

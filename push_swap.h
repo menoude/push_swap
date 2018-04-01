@@ -30,7 +30,9 @@ int		stack_pop(t_stack *stack);
 void	stack_push(t_stack *stack, int n);
 int		stack_peek(t_stack *stack);
 int		stack_contains(t_stack *stack, int n);
+int		stack_contains_higher(t_stack *stack, int n);
 int		stack_is_ordered(t_stack *stack);
+int		stack_is_inverse_ordered(t_stack *stack);
 int		stack_init(t_stack *stack);
 
 void	instructions_read(t_stack *a, t_stack *b);
@@ -42,5 +44,8 @@ void	op_rotate(t_stack *a, t_stack *b, char option);
 void	op_reverse_rotate(t_stack *a, t_stack *b, char option);
 
 void	subset_sort(t_stack *a, t_stack *b, int start, int len);
+
+void sort_a(t_stack *a, t_stack *b);
+void sort_b(t_stack *a, t_stack *b);
 
 #endif

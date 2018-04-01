@@ -6,14 +6,14 @@ void	print_stacks(t_stack *a, t_stack *b)  // A ENLEVER
 
 	i = a->size - 1;
 	ft_printf("--------\n");
-	ft_printf("stack a of size %d\n", a->size);
+	ft_printf("stack a (size = %d)\n", a->size);
 	while (i >= 0)
 	{
 		ft_printf("%d\n", a->nb[i]);
 		i--;
 	}
 	i = b->size - 1;
-	ft_printf("stack b of size %d\n", b->size);
+	ft_printf("stack b (size = %d)\n", b->size);
 	while (i >= 0)
 	{
 		ft_printf("%d\n", b->nb[i]);
