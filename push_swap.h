@@ -22,8 +22,8 @@ void	error_message(void);
 void	error_message_free_args(char **tab);
 void	error_message_free_stacks(t_stack *a, t_stack *b);
 
-void	args_check_single(t_stack *a, t_stack *b, char **argv);
-void	args_check_multi(t_stack *a, t_stack *b, char **argv);
+void			args_check_single(t_stack *a, t_stack *b, char **argv, t_stack *medians);
+void			args_check_multi(t_stack *a, t_stack *b, char **argv, t_stack *medians);
 void	args_free(char **args);
 
 int		stack_pop(t_stack *stack);
@@ -31,6 +31,7 @@ void	stack_push(t_stack *stack, int n);
 int		stack_peek(t_stack *stack);
 int		stack_contains(t_stack *stack, int n);
 int		stack_contains_higher(t_stack *stack, int n);
+int		stack_contains_lower(t_stack *stack, int n);
 int		stack_is_ordered(t_stack *stack);
 int		stack_is_inverse_ordered(t_stack *stack);
 int		stack_init(t_stack *stack);
@@ -43,9 +44,7 @@ void	op_push(t_stack *a, t_stack *b, char option);
 void	op_rotate(t_stack *a, t_stack *b, char option);
 void	op_reverse_rotate(t_stack *a, t_stack *b, char option);
 
-void	subset_sort(t_stack *a, t_stack *b, int start, int len);
-
-void sort_a(t_stack *a, t_stack *b);
-void sort_b(t_stack *a, t_stack *b);
+void		stack_sort_a(t_stack *a, t_stack *b, t_stack *medians);
+void		stack_sort_b(t_stack *a, t_stack *b, t_stack *medians);
 
 #endif

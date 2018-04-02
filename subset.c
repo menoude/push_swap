@@ -1,6 +1,6 @@
 #include "push_swap.h"
 
-static int	subset_median_value(int *set, int len, int rank)
+static int	stack_median_value(int *set, int len, int rank)
 {
 	int left[len - 1];
 	int right[len - 1];
@@ -21,69 +21,88 @@ static int	subset_median_value(int *set, int len, int rank)
 	if (left_size == rank)
 		return (set[0]);
 	else if (left_size > rank)
-		return (subset_median_value(left, left_size, rank));
+		return (stack_median_value(left, left_size, rank));
 	else
-		return (subset_median_value(right, right_size, rank - left_size - 1));
+		return (stack_median_value(right, right_size, rank - left_size - 1));
 }
 
-static void	subset_put_max_up(t_stack *a, t_stack *b, int max)
+static void	stack_raise_median_a(t_stack *a, t_stack *b, int median)
 {
 	int		pos;
 	char	*instruct;
 
 	pos = 0;
-	while (a->nb[pos] != max)
+	while (a->nb[pos] != median)
 		pos++;
 	instruct = a->size - pos - 1 <= a->size / 2 ? "ra" : "rra";
-	while (stack_peek(a) != max)
+	while (stack_peek(a) != median)
 		instructions_exec(a, b, instruct, 'y');
 }
 
-static int			subset_is_ordered(t_stack *stack, int start, int len)
+static void	stack_raise_median_b(t_stack *a, t_stack *b, int median)
 {
-	int i;
+	int		pos;
+	char	*instruct;
 
-	i = start;
-	while (i + 1 < start + len)
-	{
-		if (stack->nb[i] > stack->nb[i + 1])
-			return (0);
-		i++;
-	}
-	return (1);
+	pos = 0;
+	while (b->nb[pos] != median)
+		pos++;
+	instruct = b->size - pos - 1 <= b->size / 2 ? "rb" : "rrb";
+	while (stack_peek(b) != median)
+		instructions_exec(a, b, instruct, 'y');
 }
 
-void		subset_sort(t_stack *a, t_stack *b, int start, int len)
+void		stack_sort_a(t_stack *a, t_stack *b, t_stack *medians)
 {
 	int median;
-	// int reference_size;
-	// int transfers;
 
-	if (subset_is_ordered(a, start, len) || stack_is_ordered(a) || len <= 1)
+	if (a->size == 1)
 		return ;
-	median = subset_median_value(a->nb + start, len, len / 2);
-	ft_printf("subset (from %d to %d) median: %d\n", a->nb[start], a->nb[start + len - 1], median);
-	// reference_size = a->size;
-	// transfers = 0;
-	while (stack_contains_higher(a, median))
+	median = stack_median_value(a->nb, a->size, a->size / 2);
+	stack_push(medians, median);
+	while (stack_contains_higher(a, median) && a->size > 2)
 	{
 		if (stack_peek(a) > median)
-		{
-			instructions_exec(a, b, "pb", 'n');
-			// transfers++;
-		}
-		else if (stack_peek(a) <= median)
-			instructions_exec(a, b, "ra", 'n');
+			instructions_exec(a, b, "pb", 'y');
+		else
+			instructions_exec(a, b, "ra", 'y');
 	}
-	if (a->size == 2 && a->nb[0] > a->nb[1])
-		instructions_exec(a, b, "sa", 'n');
-	else
-		subset_put_max_up(a, b, median);
-	while (b->size)
-		instructions_exec(a, b, "pa", 'n');
-	if (len)
+	stack_raise_median_a(a, b, median);
+	if (a->size == 2)
 	{
-		subset_sort(a, b, start, len / 2);
-		subset_sort(a, b, start + len / 2, len / 2);
+		stack_pop(medians);
+		stack_sort_b(a, b, medians);
 	}
+	else
+		stack_sort_a(a, b, medians);
+}
+
+void		stack_sort_b(t_stack *a, t_stack *b, t_stack *medians)
+{
+	int median;
+
+	if (b->size == 1)
+	{
+		instructions_exec(a, b, "pa", 'y');
+		return ;
+	}
+	else if (b->size == 2)
+	{
+		if (stack_peek(b) > b->nb[b->size - 2])
+			instructions_exec(a, b, "sb", 'y');
+		while (b->size)
+			instructions_exec(a, b, "pa", 'y');
+		return ;
+	}
+	median = medians->size ? stack_pop(medians)
+					: stack_median_value(b->nb, b->size, b->size / 2);
+	while (stack_contains_lower(b, median) && b->size > 2)
+	{
+			if (stack_peek(b) < median)
+				instructions_exec(a, b, "pa", 'y');
+			else
+				instructions_exec(a, b, "rb", 'y');
+	}
+	stack_raise_median_b(a, b, median);
+	stack_sort_b(a, b, medians);
 }

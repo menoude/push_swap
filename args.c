@@ -26,7 +26,7 @@ void			args_free(char **args)
 }
 
 void			args_init_stacks(t_stack *a, t_stack *b,
-								char **args, int to_free)
+								char **args, int to_free, t_stack *medians)
 {
 	b->memory = a->memory;
 	if (!(a->nb = ft_memalloc(sizeof(int) * a->memory)))
@@ -40,15 +40,24 @@ void			args_init_stacks(t_stack *a, t_stack *b,
 			error_message_free_args(args);
 		free(a->nb);
 	}
+	else if (!(b->nb = ft_memalloc(sizeof(int) * a->memory / 2)))
+	{
+		if (to_free)
+			error_message_free_args(args);
+		free(a->nb);
+		free(b->nb);
+	}
 	a->size = 0;
 	b->size = 0;
+	medians->size = 0;
 }
 
-static void		args_finalize(t_stack *a, t_stack *b, char **args, int to_free)
+static void		args_finalize(t_stack *a, t_stack *b, char **args,
+														int to_free, t_stack *medians)
 {
 	int next_nb;
 
-	args_init_stacks(a, b, args, to_free);
+	args_init_stacks(a, b, args, to_free, medians);
 	while (a->size < a->memory)
 	{
 		next_nb = ft_atoi(args[a->size]);
@@ -65,7 +74,7 @@ static void		args_finalize(t_stack *a, t_stack *b, char **args, int to_free)
 		args_free(args);
 }
 
-void			args_check_single(t_stack *a, t_stack *b, char **argv)
+void			args_check_single(t_stack *a, t_stack *b, char **argv, t_stack *medians)
 {
 	char		**tab;
 	int			i;
@@ -90,10 +99,10 @@ void			args_check_single(t_stack *a, t_stack *b, char **argv)
 			error_message_free_args(tab);
 		a->memory++;
 	}
-	args_finalize(a, b, tab, 1);
+	args_finalize(a, b, tab, 1, medians);
 }
 
-void			args_check_multi(t_stack *a, t_stack *b, char **argv)
+void			args_check_multi(t_stack *a, t_stack *b, char **argv, t_stack *medians)
 {
 	int			k;
 	int			i;
@@ -116,5 +125,5 @@ void			args_check_multi(t_stack *a, t_stack *b, char **argv)
 		k++;
 		a->memory++;
 	}
-	args_finalize(a, b, argv + 1, 0);
+	args_finalize(a, b, argv + 1, 0, medians);
 }
