@@ -14,95 +14,142 @@ static int	stack_median_value(int *set, int len, int rank)
 	while (i < len)
 	{
 		if (set[i] < set[0])
-			left[left_size++] = set[i++];
+		left[left_size++] = set[i++];
 		else if (set[i] > set[0])
-			right[right_size++] = set[i++];
+		right[right_size++] = set[i++];
 	}
 	if (left_size == rank)
-		return (set[0]);
+	return (set[0]);
 	else if (left_size > rank)
-		return (stack_median_value(left, left_size, rank));
+	return (stack_median_value(left, left_size, rank));
 	else
-		return (stack_median_value(right, right_size, rank - left_size - 1));
+	return (stack_median_value(right, right_size, rank - left_size - 1));
 }
 
-static void	stack_raise_median_a(t_stack *a, t_stack *b, int median)
+static void	stack_raise_value(t_stack *a, t_stack *b, int median, char a_or_b)
 {
-	int		pos;
-	char	*instruct;
+	int rotations;
 
-	pos = 0;
-	while (a->nb[pos] != median)
-		pos++;
-	instruct = a->size - pos - 1 <= a->size / 2 ? "ra" : "rra";
-	while (stack_peek(a) != median)
-		instructions_exec(a, b, instruct, 'y');
+	rotations = 0;
+	if (a_or_b == 'a')
+	{
+		while (stack_peek(a) != median)
+		{
+			instructions_exec(a, b, "ra");
+			rotations++;
+		}
+		while (rotations--)
+		{
+			instructions_exec(a, b, "rra");
+			instructions_exec(a, b, "sa");
+		}
+	}
+	if (a_or_b == 'b')
+	{
+		while (stack_peek(b) != median)
+		{
+			instructions_exec(a, b, "rb");
+			rotations++;
+		}
+		while (rotations--)
+		{
+			instructions_exec(a, b, "rrb");
+			instructions_exec(a, b, "sb");
+		}
+	}
 }
 
-static void	stack_raise_median_b(t_stack *a, t_stack *b, int median)
-{
-	int		pos;
-	char	*instruct;
+// static void	stack_push_value_b(t_stack *a, t_stack *b, int median)
+// {
+// 	int		rotations;
+//
+// 	rotations = 0;
+// 	while (stack_peek(b) != median)
+// 	{
+// 		ft_printf("-----------------------------median = %d\n", median);
+// 		instructions_exec(a, b, "rb");
+// 		rotations++;
+// 	}
+// 	while (rotations--)
+// 		instructions_exec(a, b, "rrb");
+// }
 
-	pos = 0;
-	while (b->nb[pos] != median)
-		pos++;
-	instruct = b->size - pos - 1 <= b->size / 2 ? "rb" : "rrb";
-	while (stack_peek(b) != median)
-		instructions_exec(a, b, instruct, 'y');
-}
-
-void		stack_sort_a(t_stack *a, t_stack *b, t_stack *medians)
+void		stack_sort_a(t_stack *a, t_stack *b, int elements)
 {
 	int median;
+	int transferts;
+	int rotations;
 
-	if (a->size == 1)
+	if (elements <= 2)
 		return ;
-	median = stack_median_value(a->nb, a->size, a->size / 2);
-	stack_push(medians, median);
-	while (stack_contains_higher(a, median) && a->size > 2)
+	median = stack_median_value(a->nb + a->size - elements, elements, elements / 2);
+	printf("%d elements for a, with median = %d\n\n", elements, median);
+	transferts = 0;
+	rotations = 0;
+	while (stack_contains_higher(a, median))
 	{
 		if (stack_peek(a) > median)
-			instructions_exec(a, b, "pb", 'y');
+		{
+			instructions_exec(a, b, "pb");
+			transferts++;
+		}
 		else
-			instructions_exec(a, b, "ra", 'y');
+		{
+			instructions_exec(a, b, "ra");
+			rotations++;
+		}
 	}
-	stack_raise_median_a(a, b, median);
-	if (a->size == 2)
-	{
-		stack_pop(medians);
-		stack_sort_b(a, b, medians);
-	}
-	else
-		stack_sort_a(a, b, medians);
+	while (rotations--)
+		instructions_exec(a, b, "rra");
+	stack_raise_value(a, b, median, 'a');
+	if (elements == 2 && stack_peek(a) < a->nb[a->size - 2])
+		instructions_exec(a, b, "sa");
+	if (elements == 1)
+		return ;
+	ft_printf("pushed %d elements to b\n", transferts);
+	stack_sort_a(a, b, a->size);
+	stack_sort_b(a, b, transferts);
 }
 
-void		stack_sort_b(t_stack *a, t_stack *b, t_stack *medians)
+void		stack_sort_b(t_stack *a, t_stack *b, int elements)
 {
 	int median;
+	int transferts;
+	int rotations;
 
-	if (b->size == 1)
+	if (elements < 2)
 	{
-		instructions_exec(a, b, "pa", 'y');
+		instructions_exec(a, b, "pa");
 		return ;
 	}
-	else if (b->size == 2)
+	median = stack_median_value(b->nb + b->size - elements, elements, elements / 2);
+	printf("%d elements for b, with median = %d\n\n", elements, median);
+	transferts = 0;
+	rotations = 0;
+	while (stack_contains_lower(b, median))
 	{
-		if (stack_peek(b) > b->nb[b->size - 2])
-			instructions_exec(a, b, "sb", 'y');
-		while (b->size)
-			instructions_exec(a, b, "pa", 'y');
+		if (stack_peek(b) < median)
+		{
+			instructions_exec(a, b, "pa");
+			transferts++;
+		}
+		else
+		{
+			instructions_exec(a, b, "rb");
+			rotations++;
+		}
+	}
+	while (rotations--)
+		instructions_exec(a, b, "rrb");
+	stack_raise_value(a, b, median, 'b');
+	if (elements == 2 && stack_peek(a) < a->nb[a->size - 2])
+		instructions_exec(a, b, "sb");
+	if (elements == 1)
+	{
+		instructions_exec(a, b, "pa");
 		return ;
 	}
-	median = medians->size ? stack_pop(medians)
-					: stack_median_value(b->nb, b->size, b->size / 2);
-	while (stack_contains_lower(b, median) && b->size > 2)
-	{
-			if (stack_peek(b) < median)
-				instructions_exec(a, b, "pa", 'y');
-			else
-				instructions_exec(a, b, "rb", 'y');
-	}
-	stack_raise_median_b(a, b, median);
-	stack_sort_b(a, b, medians);
+ft_printf("pushed %d elements to a\n", transferts);
+	stack_sort_a(a, b, transferts);
+	stack_sort_b(a, b, elements - transferts);
 }

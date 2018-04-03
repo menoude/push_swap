@@ -40,7 +40,7 @@ void			args_init_stacks(t_stack *a, t_stack *b,
 			error_message_free_args(args);
 		free(a->nb);
 	}
-	else if (!(b->nb = ft_memalloc(sizeof(int) * a->memory / 2)))
+	else if (!(medians->nb = ft_memalloc(sizeof(int) * a->memory)))
 	{
 		if (to_free)
 			error_message_free_args(args);

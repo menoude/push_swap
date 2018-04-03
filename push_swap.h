@@ -37,14 +37,14 @@ int		stack_is_inverse_ordered(t_stack *stack);
 int		stack_init(t_stack *stack);
 
 void	instructions_read(t_stack *a, t_stack *b);
-void	instructions_exec(t_stack *a, t_stack *b, char *new_instruct, int print);
+void	instructions_exec(t_stack *a, t_stack *b, char *new_instruct);
 
 void	op_swap(t_stack *a, t_stack *b, char option);
 void	op_push(t_stack *a, t_stack *b, char option);
 void	op_rotate(t_stack *a, t_stack *b, char option);
 void	op_reverse_rotate(t_stack *a, t_stack *b, char option);
 
-void		stack_sort_a(t_stack *a, t_stack *b, t_stack *medians);
-void		stack_sort_b(t_stack *a, t_stack *b, t_stack *medians);
+void	stack_sort_a(t_stack *a, t_stack *b, int elements);
+void	stack_sort_b(t_stack *a, t_stack *b, int elements);
 
 #endif
