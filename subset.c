@@ -74,14 +74,59 @@ static void	stack_raise_value(t_stack *a, t_stack *b, int median, char a_or_b)
 // 		instructions_exec(a, b, "rrb");
 // }
 
-void		stack_sort_a(t_stack *a, t_stack *b, int elements)
+int		elements_ordered(t_stack *stack, int elements)
+{
+	int i;
+
+	i = stack->size - elements;
+	while (i + 1 < stack->size)
+	{
+		if (stack->nb[i] > stack->nb[i + 1])
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+int		elements_inverse_ordered(t_stack *stack, int elements)
+{
+	int i;
+
+	i = stack->size - elements;
+	while (i + 1 < stack->size)
+	{
+		if (stack->nb[i] < stack->nb[i + 1])
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+void flush_a(t_stack *a, t_stack *b, int elements)
+{
+	while (elements--)
+		instructions_exec(a, b, "pb");
+}
+
+void flush_b(t_stack *a, t_stack *b, int elements)
+{
+	while (elements--)
+		instructions_exec(a, b, "pa");
+}
+
+void		sort_a(t_stack *a, t_stack *b, int elements)
 {
 	int median;
 	int transferts;
 	int rotations;
 
-	if (elements <= 2)
+	if (elements <= 2 || elements_ordered(a, elements))
+	{
+		if (elements == 2 && stack_peek(a) < a->nb[a->size - 2])
+			instructions_exec(a, b, "sa");
+		printf("end this set\n");
 		return ;
+	}
 	median = stack_median_value(a->nb + a->size - elements, elements, elements / 2);
 	printf("%d elements for a, with median = %d\n\n", elements, median);
 	transferts = 0;
@@ -102,29 +147,27 @@ void		stack_sort_a(t_stack *a, t_stack *b, int elements)
 	while (rotations--)
 		instructions_exec(a, b, "rra");
 	stack_raise_value(a, b, median, 'a');
-	if (elements == 2 && stack_peek(a) < a->nb[a->size - 2])
-		instructions_exec(a, b, "sa");
-	if (elements == 1)
-		return ;
 	ft_printf("pushed %d elements to b\n", transferts);
-	stack_sort_a(a, b, a->size);
-	stack_sort_b(a, b, transferts);
+	sort_a(a, b, a->size);
+	sort_b(a, b, transferts);
 }
 
-void		stack_sort_b(t_stack *a, t_stack *b, int elements)
+void		sort_b(t_stack *a, t_stack *b, int elements)
 {
 	int median;
 	int transferts;
 	int rotations;
 
-	if (elements < 2)
+	if (elements <= 2 || elements_inverse_ordered(b, elements))
 	{
-		instructions_exec(a, b, "pa");
+		if (stack_peek(b) > b->nb[b->size - 2])
+			instructions_exec(a, b, "sb");
+		flush_b(a, b, elements);
 		return ;
 	}
+	transferts = 0;
 	median = stack_median_value(b->nb + b->size - elements, elements, elements / 2);
 	printf("%d elements for b, with median = %d\n\n", elements, median);
-	transferts = 0;
 	rotations = 0;
 	while (stack_contains_lower(b, median))
 	{
@@ -142,14 +185,7 @@ void		stack_sort_b(t_stack *a, t_stack *b, int elements)
 	while (rotations--)
 		instructions_exec(a, b, "rrb");
 	stack_raise_value(a, b, median, 'b');
-	if (elements == 2 && stack_peek(a) < a->nb[a->size - 2])
-		instructions_exec(a, b, "sb");
-	if (elements == 1)
-	{
-		instructions_exec(a, b, "pa");
-		return ;
-	}
-ft_printf("pushed %d elements to a\n", transferts);
-	stack_sort_a(a, b, transferts);
-	stack_sort_b(a, b, elements - transferts);
+	ft_printf("pushed %d elements to a\n", transferts);
+	sort_a(a, b, transferts);
+	sort_b(a, b, elements - transferts);
 }
