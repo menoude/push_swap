@@ -61,6 +61,7 @@ void	clean_instructions(t_instruct *instructions)
 	if ((new_instruct = clean_mixable(instructions->next->instruction,
 					instructions->next->next->instruction)))
 	{
+		free(remove_next->instruction);
 		free(remove_next);
 		instructions->next = instructions->next->next;
 		free(instructions->next->instruction);

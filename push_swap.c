@@ -16,6 +16,8 @@ int	main(int argc, char **argv)
 {
 	t_stack	a;
 	t_stack	b;
+	t_instruct *instructions;
+	int i;
 
 	if (argc < 2)
 		error_message();
@@ -24,8 +26,13 @@ int	main(int argc, char **argv)
 	else if (argc > 2)
 		args_check_multi(&a, &b, argv);
 	a.instructions = 0;
-	sort_a(&a, &b, a.size, 1);
-	clean_instructions(a.instructions);
+	sort_a(&a, &b, a.size, 0);
+	instructions = a.instructions;
+	i = 0;
+	while (instructions && i++ >= 0)
+		instructions = instructions->next;
+	if (i > 3)
+		clean_instructions(a.instructions);
 	instructions_print(a.instructions);
 	free(a.nb);
 	free(b.nb);

@@ -12,15 +12,15 @@
 
 #include "push_swap.h"
 
-void	instructions_enqueue(t_stack *a, char *new_instruct)
+void	instructions_enqueue(t_stack *a, t_stack *b, char *new_instruct)
 {
 	t_instruct *ptr;
 
 	if (!a->instructions)
 	{
 		a->instructions = malloc(sizeof(t_instruct));
-		// if (!instructions)
-		// ; //faire un truc !!!!
+		if (!a->instructions)
+			error_message_free_stacks(a, b);
 		a->instructions->instruction = ft_strdup(new_instruct);
 		a->instructions->next = 0;
 	}
@@ -30,8 +30,8 @@ void	instructions_enqueue(t_stack *a, char *new_instruct)
 		while (ptr->next)
 			ptr = ptr->next;
 		ptr->next = malloc(sizeof(t_instruct));
-		// if (!ptr->next)
-		// ; //faire un truc !!!
+		if (!ptr->next)
+			error_message_free_stacks(a, b);
 		ptr = ptr->next;
 		ptr->instruction = ft_strdup(new_instruct);
 		ptr->next = 0;
@@ -63,7 +63,7 @@ void	instructions_exec(t_stack *a, t_stack *b, char *new_instruct)
 		op_reverse_rotate(a, b, new_instruct[2]);
 	else
 		error_message_free_stacks(a, b);
-	instructions_enqueue(a, new_instruct);
+	instructions_enqueue(a, b, new_instruct);
 }
 
 void		instructions_read(t_stack *a, t_stack *b)

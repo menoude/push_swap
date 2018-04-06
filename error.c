@@ -27,8 +27,17 @@ void	error_message_free_args(char **args)
 
 void	error_message_free_stacks(t_stack *a, t_stack *b)
 {
+	t_instruct *previous;
+
 	free(a->nb);
 	free(b->nb);
+	while (a->instructions)
+	{
+		previous = a->instructions;
+		a->instructions = a->instructions->next;
+		free(previous->instruction);
+		free(previous);
+	}
 	write(2, "Error\n", 6);
 	exit(0);
 }

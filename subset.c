@@ -12,7 +12,7 @@
 
 #include "push_swap.h"
 
-int		subset_median_value(int *set, int len, int rank)
+int		subset_median(int *set, int len, int rank)
 {
 	int left[len - 1];
 	int right[len - 1];
@@ -33,9 +33,9 @@ int		subset_median_value(int *set, int len, int rank)
 	if (left_size == rank)
 		return (set[0]);
 	else if (left_size > rank)
-		return (subset_median_value(left, left_size, rank));
+		return (subset_median(left, left_size, rank));
 	else
-		return (subset_median_value(right, right_size, rank - left_size - 1));
+		return (subset_median(right, right_size, rank - left_size - 1));
 }
 
 int		subset_ordered(t_stack *stack, int elements)
