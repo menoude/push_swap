@@ -21,21 +21,30 @@ void	op_swap(t_stack *a, t_stack *b, char option)
 		tmp = a->nb[a->size - 1];
 		a->nb[a->size - 1] = a->nb[a->size - 2];
 		a->nb[a->size - 2] = tmp;
+		counter_sa++;
 	}
 	if ((option == 'b' || option == 's') && b->size > 1)
 	{
 		tmp = b->nb[b->size - 1];
 		b->nb[b->size - 1] = b->nb[b->size - 2];
 		b->nb[b->size - 2] = tmp;
+		counter_sb++;
 	}
 }
 
 void	op_push(t_stack *a, t_stack *b, char option)
 {
 	if (option == 'a' && b->size)
+{
+
 		stack_push(a, stack_pop(b));
+		counter_pa++;
+	}
 	else if (option == 'b' && a->size)
-		stack_push(b, stack_pop(a));
+		{
+			stack_push(b, stack_pop(a));
+			counter_pb++;
+		}
 }
 
 void	op_rotate(t_stack *a, t_stack *b, char option)
@@ -45,6 +54,7 @@ void	op_rotate(t_stack *a, t_stack *b, char option)
 
 	if ((option == 'a' || option == 'r') && a->size > 1)
 	{
+		counter_ra++;
 		i = a->size - 1;
 		tmp = a->nb[i];
 		while (i - 1 >= 0)
@@ -56,6 +66,7 @@ void	op_rotate(t_stack *a, t_stack *b, char option)
 	}
 	if ((option == 'b' || option == 'r') && b->size > 1)
 	{
+		counter_rb++;
 		i = b->size - 1;
 		tmp = b->nb[i];
 		while (i - 1 >= 0)
@@ -75,6 +86,7 @@ void	op_reverse_rotate(t_stack *a, t_stack *b, char option)
 	i = 1;
 	if ((option == 'a' || option == 'r') && a->size > 1)
 	{
+		counter_rra++;
 		tmp = a->nb[0];
 		while (i < a->size)
 		{
@@ -85,6 +97,7 @@ void	op_reverse_rotate(t_stack *a, t_stack *b, char option)
 	}
 	if ((option == 'b' || option == 'r') && b->size > 1)
 	{
+		counter_rrb++;
 		tmp = b->nb[0];
 		while (i < b->size)
 		{

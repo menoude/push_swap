@@ -14,7 +14,7 @@ NAME_1 = checker
 NAME_2 = push_swap
 DIR_LIB = libft
 SRC = error.c args.c stack.c instructions.c operations.c \
-		subset.c \
+		sort.c subset.c \
 		print_a_enlever.c # A ENLEVER
 BINARIES = $(SRC:.c=.o)
 CC = gcc -g -Wall -Werror -Wextra #enlever le -g

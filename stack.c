@@ -101,3 +101,36 @@ int		stack_is_inverse_ordered(t_stack *stack)
 	}
 	return (1);
 }
+
+void	stack_raise_value(t_stack *a, t_stack *b, t_instruct *instructions, int median, char a_or_b)
+{
+	int rotations;
+
+	rotations = 0;
+	if (a_or_b == 'a')
+	{
+		while (stack_peek(a) != median)
+		{
+			instructions_exec(a, b, instructions, "ra");
+			rotations++;
+		}
+		while (rotations--)
+		{
+			instructions_exec(a, b, instructions, "rra");
+			instructions_exec(a, b, instructions, "sa");
+		}
+	}
+	if (a_or_b == 'b')
+	{
+		while (stack_peek(b) != median)
+		{
+			instructions_exec(a, b, instructions, "rb");
+			rotations++;
+		}
+		while (rotations--)
+		{
+			instructions_exec(a, b, instructions, "rrb");
+			instructions_exec(a, b, instructions, "sb");
+		}
+	}
+}

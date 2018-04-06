@@ -12,7 +12,52 @@
 
 #include "push_swap.h"
 
-void	instructions_exec(t_stack *a, t_stack *b, char *new_instruct)
+void	instructions_enqueue(t_stack *a, t_stack *b, t_instruct **instructions,
+													char *new_instruct)
+{
+	(void)a;
+	(void)b;
+	if (!*instructions)
+	{
+		*instructions = malloc(sizeof(t_instruct));
+		// if (!instructions)
+			// ; //faire un truc !!!!
+	}
+	else
+	{
+		while ((*instructions)->next)
+			*instructions = (*instructions)->next;
+		(*instructions)->next = malloc(sizeof(t_instruct));
+		// if (!*instructions->next)
+			// ; //faire un truc !!!
+		*instructions = (*instructions)->next;
+	}
+	(*instructions)->instruction = ft_strdup(new_instruct);
+	(*instructions)->next = 0;
+}
+
+void	instructions_print(t_instruct *lst)
+{
+		t_instruct	*ptr;
+		t_instruct	*previous;
+
+		ptr = lst;
+		previous = 0;
+		if (!ptr)
+			return;
+		while (ptr->next)
+		{
+			previous = ptr;
+			ptr = ptr->next;
+		}
+		ft_putendl(ptr->instruction);
+		free(ptr->instruction);
+		free(ptr);
+		if (previous)
+			previous->next = 0;
+}
+
+void	instructions_exec(t_stack *a, t_stack *b, t_instruct **lst, char *new_instruct)
 {
 	if (ft_strequ(new_instruct, "sa") || ft_strequ(new_instruct, "sb")
 		|| ft_strequ(new_instruct, "ss"))
@@ -27,19 +72,21 @@ void	instructions_exec(t_stack *a, t_stack *b, char *new_instruct)
 		op_reverse_rotate(a, b, new_instruct[2]);
 	else
 		error_message_free_stacks(a, b);
-	ft_putendl(new_instruct);
-	print_stacks(a, b);
+	instructions_enqueue(a, b, lst, new_instruct);
+	// print_stacks(a, b);
 	counter++;
 }
 
 void		instructions_read(t_stack *a, t_stack *b)
 {
 	char *instruct;
+	t_instruct *instructions;
 
+	instructions = 0;
 	instruct = 0;
 	while (get_next_line(0, &instruct) > 0)
 	{
-		instructions_exec(a, b, instruct);
+		instructions_exec(a, b, &instructions, instruct);
 		free(instruct);
 	}
 }

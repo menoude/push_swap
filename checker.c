@@ -16,18 +16,15 @@ int		main(int argc, char **argv)
 {
 	t_stack	a;
 	t_stack	b;
-	t_stack	medians;
 
 	if (argc < 2)
 		error_message();
 	else if (argc == 2)
-		args_check_single(&a, &b, argv, &medians);
+		args_check_single(&a, &b, argv);
 	else if (argc > 2)
-		args_check_multi(&a, &b, argv, &medians);
-	// print_stacks(&a, &b); // A ENLEVER
+		args_check_multi(&a, &b, argv);
 	instructions_read(&a, &b);
-	// print_stacks(&a, &b); // A ENLEVER
-	if (stack_is_ordered(&a) && !b.size)
+	if (stack_is_inverse_ordered(&a) && !b.size)
 		ft_putendl("OK");
 	else
 		ft_putendl("KO");
