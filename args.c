@@ -55,7 +55,7 @@ static void		args_finalize(t_stack *a, t_stack *b, char **args,
 	while (--i >= 0)
 	{
 		next_nb = ft_atoi(args[i]);
-		if (stack_contains(a, next_nb))
+		if (content_contains(a, next_nb))
 		{
 			free(a->nb);
 			if (to_free)

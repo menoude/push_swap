@@ -24,7 +24,7 @@ int		main(int argc, char **argv)
 	else if (argc > 2)
 		args_check_multi(&a, &b, argv);
 	instructions_read(&a, &b);
-	if (stack_is_inverse_ordered(&a) && !b.size)
+	if (content_is_inverse_ordered(&a) && !b.size)
 		ft_putendl("OK");
 	else
 		ft_putendl("KO");

@@ -22,19 +22,6 @@ void	print_stacks(t_stack *a, t_stack *b)  // A ENLEVER
 	ft_putstr("\n\n");
 }
 
-void print_subset_instructions(int transferts)
-{
-	ft_printf("pushed %d elements to a\n", transferts);
-	ft_printf("%d pb\n", counter_pb);
-	ft_printf("%d ra\n", counter_ra);
-	ft_printf("%d rra\n", counter_rra);
-	ft_printf("%d sa\n", counter_sa);
-	ft_printf("%d pa\n", counter_pa);
-	ft_printf("%d rb\n", counter_rb);
-	ft_printf("%d rrb\n", counter_rrb);
-	ft_printf("%d sb\n", counter_sb);
-}
-
 void	print_set(int *set, char *name, int size)
 {
 	int i;

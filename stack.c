@@ -32,7 +32,7 @@ int		stack_peek(t_stack *stack)
 	return (stack->nb[stack->size - 1]);
 }
 
-int		stack_contains(t_stack *stack, int n)
+int		content_contains(t_stack *stack, int n)
 {
 	int i;
 
@@ -44,93 +44,4 @@ int		stack_contains(t_stack *stack, int n)
 		i++;
 	}
 	return (0);
-}
-
-int		stack_contains_higher(t_stack *stack, int n)
-{
-	int i;
-
-	i = 0;
-	while (i < stack->size)
-	{
-		if (stack->nb[i] > n)
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
-int		stack_contains_lower(t_stack *stack, int n)
-{
-	int i;
-
-	i = 0;
-	while (i < stack->size)
-	{
-		if (stack->nb[i] < n)
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
-int		stack_is_ordered(t_stack *stack)
-{
-	int i;
-
-	i = 0;
-	while (i + 1 < stack->size)
-	{
-		if (stack->nb[i] > stack->nb[i + 1])
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
-int		stack_is_inverse_ordered(t_stack *stack)
-{
-	int i;
-
-	i = 0;
-	while (i + 1 < stack->size)
-	{
-		if (stack->nb[i] < stack->nb[i + 1])
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
-void	stack_raise_value(t_stack *a, t_stack *b, t_instruct *instructions, int median, char a_or_b)
-{
-	int rotations;
-
-	rotations = 0;
-	if (a_or_b == 'a')
-	{
-		while (stack_peek(a) != median)
-		{
-			instructions_exec(a, b, instructions, "ra");
-			rotations++;
-		}
-		while (rotations--)
-		{
-			instructions_exec(a, b, instructions, "rra");
-			instructions_exec(a, b, instructions, "sa");
-		}
-	}
-	if (a_or_b == 'b')
-	{
-		while (stack_peek(b) != median)
-		{
-			instructions_exec(a, b, instructions, "rb");
-			rotations++;
-		}
-		while (rotations--)
-		{
-			instructions_exec(a, b, instructions, "rrb");
-			instructions_exec(a, b, instructions, "sb");
-		}
-	}
 }
