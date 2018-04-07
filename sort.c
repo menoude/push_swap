@@ -23,18 +23,38 @@ void		sort_three_elements(t_stack *a, t_stack *b)
 	}
 }
 
+int			sort_less_than_two_elements_a(t_stack *a, t_stack *b,
+											int elements)
+{
+ 	if (elements == 1 || elements == 2 || subset_inverse_ordered(a, elements))
+	{
+		if (elements == 2 && stack_peek(a) > a->nb[a->size - 2])
+			instructions_exec(a, b, "sa");
+		return (1);
+	}
+	return (0);
+}
+
+int			sort_less_than_two_elements_b(t_stack *a, t_stack *b,
+											int elements)
+{
+ 	if (elements == 1 || elements == 2 || subset_ordered(b, elements))
+	{
+		if (elements == 2 && stack_peek(b) < b->nb[b->size - 2])
+			instructions_exec(a, b, "sb");
+		return (1);
+	}
+	return (0);
+}
+
 void		sort_a(t_stack *a, t_stack *b, int elements, int reorder)
 {
 	int median;
 	int transferts;
 	int rotations;
 
-	if (elements <= 2 || subset_inverse_ordered(a, elements))
-	{
-		if (elements == 2 && stack_peek(a) > a->nb[a->size - 2])
-			instructions_exec(a, b, "sa");
-		return ;
-	}
+	if (sort_less_than_two_elements_a(a, b, elements))
+		return;
 	median = subset_median(a->nb + a->size - elements, elements, elements / 2);
 	transferts = 0;
 	rotations = 0;
@@ -60,10 +80,8 @@ void		sort_b(t_stack *a, t_stack *b, int elements)
 	int transferts;
 	int rotations;
 
-	if (elements <= 2 || subset_ordered(b, elements))
+	if (sort_less_than_two_elements_b(a, b, elements))
 	{
-		if (stack_peek(b) < b->nb[b->size - 2])
-			instructions_exec(a, b, "sb");
 		subset_flush_b(a, b, elements);
 		return ;
 	}

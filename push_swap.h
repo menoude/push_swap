@@ -65,9 +65,13 @@ void			op_push(t_stack *a, t_stack *b, char option);
 void			op_rotate(t_stack *a, t_stack *b, char option);
 void			op_reverse_rotate(t_stack *a, t_stack *b, char option);
 
+void			sort_three_elements(t_stack *a, t_stack *b);
 void			sort_a(t_stack *a, t_stack *b, int elements, int reorder);
 void			sort_b(t_stack *a, t_stack *b, int elements);
-void			sort_three_elements(t_stack *a, t_stack *b);
+int				sort_less_than_two_elements_a(t_stack *a, t_stack *b,
+												int elements);
+int				sort_less_than_two_elements_b(t_stack *a, t_stack *b,
+												int elements);
 
 int				subset_median(int *set, int len, int rank);
 int				subset_ordered(t_stack *stack, int elements);
