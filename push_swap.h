@@ -56,6 +56,7 @@ void			instructions_enqueue(t_stack *a, t_stack *b, char *new_instruct);
 void			instructions_print(t_instruct *instructions);
 
 void			clean_instructions(t_instruct *instructions);
+int				clean_wide_enough(t_instruct *instructions);
 int				clean_redundancy(char *s1, char *s2);
 char			*clean_mixable(char *s1, char *s2);
 
@@ -66,6 +67,8 @@ void			op_reverse_rotate(t_stack *a, t_stack *b, char option);
 
 void			sort_a(t_stack *a, t_stack *b, int elements, int reorder);
 void			sort_b(t_stack *a, t_stack *b, int elements);
+void			sort_three_elements(t_stack *a, t_stack *b, int elements,
+									char a_b);
 
 int				subset_median(int *set, int len, int rank);
 int				subset_ordered(t_stack *stack, int elements);

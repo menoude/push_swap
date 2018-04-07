@@ -12,6 +12,16 @@
 
 #include "push_swap.h"
 
+void	instructions_print(t_instruct *instructions)
+{
+	if (!instructions)
+	return ;
+	ft_putendl(instructions->instruction);
+	instructions_print(instructions->next);
+	free(instructions->instruction);
+	free(instructions);
+}
+
 void	instructions_enqueue(t_stack *a, t_stack *b, char *new_instruct)
 {
 	t_instruct *ptr;
@@ -38,15 +48,6 @@ void	instructions_enqueue(t_stack *a, t_stack *b, char *new_instruct)
 	}
 }
 
-void	instructions_print(t_instruct *instructions)
-{
-	if (!instructions)
-		return ;
-	ft_putendl(instructions->instruction);
-	instructions_print(instructions->next);
-	free(instructions->instruction);
-	free(instructions);
-}
 
 void	instructions_exec(t_stack *a, t_stack *b, char *new_instruct)
 {

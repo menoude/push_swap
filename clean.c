@@ -40,31 +40,39 @@ char	*clean_mixable(char *s1, char *s2)
 		return (0);
 }
 
+int		clean_wide_enough(t_instruct *instructions)
+{
+	if (instructions && instructions->next && instructions->next->next
+		&& instructions->next->next->next)
+		return (1);
+	return (0);
+}
+
 void	clean_instructions(t_instruct *instructions)
 {
-	t_instruct	*remove_next;
-	t_instruct	*remove_next_next;
-	char		*new_instruct;
+	t_instruct	*next;
+	t_instruct	*next_next;
+	char		*new;
 
-	if (!instructions->next->next->next)
+	if (!clean_wide_enough(instructions))
 		return ;
 	clean_instructions(instructions->next);
-	remove_next = instructions->next;
-	remove_next_next = instructions->next->next;
-	if (clean_redundancy(instructions->next->instruction,
-				instructions->next->next->instruction))
+	next = instructions->next;
+	next_next = instructions->next->next;
+	if (clean_wide_enough(instructions)
+		&& clean_redundancy(next->instruction, next_next->instruction))
 	{
-		instructions->next = instructions->next->next->next;
-		free(remove_next_next->instruction);
-		free(remove_next_next);
+		instructions->next = next_next->next;
+		free(next_next->instruction);
+		free(next_next);
 	}
-	if ((new_instruct = clean_mixable(instructions->next->instruction,
-					instructions->next->next->instruction)))
+	if (clean_wide_enough(instructions)
+		&& (new = clean_mixable(next->instruction, next_next->instruction)))
 	{
-		free(remove_next->instruction);
-		free(remove_next);
-		instructions->next = instructions->next->next;
-		free(instructions->next->instruction);
-		instructions->next->instruction = new_instruct;
+		free(next->instruction);
+		free(next);
+		free(next_next->instruction);
+		next_next->instruction = new;
+		instructions->next = next_next;
 	}
 }
