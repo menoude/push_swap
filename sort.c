@@ -12,6 +12,14 @@
 
 #include "push_swap.h"
 
+void		sort_three_elements(t_stack *a, t_stack *b, int elements, char a_b)
+{
+		t_stack *stack;
+
+		stack = a_b == 'a' ? a : b;
+		(void)elements;
+}
+
 void		sort_a(t_stack *a, t_stack *b, int elements, int reorder)
 {
 	int median;
