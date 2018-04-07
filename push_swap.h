@@ -67,8 +67,7 @@ void			op_reverse_rotate(t_stack *a, t_stack *b, char option);
 
 void			sort_a(t_stack *a, t_stack *b, int elements, int reorder);
 void			sort_b(t_stack *a, t_stack *b, int elements);
-void			sort_three_elements(t_stack *a, t_stack *b, int elements,
-									char a_b);
+void			sort_three_elements(t_stack *a, t_stack *b);
 
 int				subset_median(int *set, int len, int rank);
 int				subset_ordered(t_stack *stack, int elements);

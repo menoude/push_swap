@@ -15,7 +15,7 @@
 void	instructions_print(t_instruct *instructions)
 {
 	if (!instructions)
-	return ;
+		return ;
 	ft_putendl(instructions->instruction);
 	instructions_print(instructions->next);
 	free(instructions->instruction);

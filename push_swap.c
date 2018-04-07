@@ -24,7 +24,10 @@ int	main(int argc, char **argv)
 	else if (argc > 2)
 		args_check_multi(&a, &b, argv);
 	a.instructions = 0;
-	sort_a(&a, &b, a.size, 0);
+	if (a.size == 3)
+		sort_three_elements(&a, &b);
+	else
+		sort_a(&a, &b, a.size, 0);
 	clean_instructions(a.instructions);
 	instructions_print(a.instructions);
 	free(a.nb);

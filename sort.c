@@ -12,12 +12,15 @@
 
 #include "push_swap.h"
 
-void		sort_three_elements(t_stack *a, t_stack *b, int elements, char a_b)
+void		sort_three_elements(t_stack *a, t_stack *b)
 {
-		t_stack *stack;
-
-		stack = a_b == 'a' ? a : b;
-		(void)elements;
+	while (!content_is_inverse_ordered(a))
+	{
+		if (a->nb[2] > a->nb[1] && a->nb[2] > a->nb[0])
+			instructions_exec(a, b, "ra");
+		else
+			instructions_exec(a, b, "sa");
+	}
 }
 
 void		sort_a(t_stack *a, t_stack *b, int elements, int reorder)
