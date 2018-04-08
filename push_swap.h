@@ -30,7 +30,7 @@ typedef struct	s_stack
 	t_instruct	*instructions;
 }				t_stack;
 
-void			print_stacks(t_stack *a, t_stack *b); // A ENLEVER OU PAS
+void			print_stacks(t_stack *a, t_stack *b);
 
 void			error_message(void);
 void			error_message_free_args(char **tab);
@@ -50,7 +50,7 @@ int				content_contains_lower(t_stack *stack, int n);
 int				content_is_ordered(t_stack *stack);
 int				content_is_inverse_ordered(t_stack *stack);
 
-void			instructions_read(t_stack *a, t_stack *b);
+void			instructions_read(t_stack *a, t_stack *b, int verbose);
 void			instructions_exec(t_stack *a, t_stack *b, char *new_instruct);
 void			instructions_enqueue(t_stack *a, t_stack *b, char *new_instruct);
 void			instructions_print(t_instruct *instructions);
@@ -65,7 +65,7 @@ void			op_push(t_stack *a, t_stack *b, char option);
 void			op_rotate(t_stack *a, t_stack *b, char option);
 void			op_reverse_rotate(t_stack *a, t_stack *b, char option);
 
-void			sort_three_elements(t_stack *a, t_stack *b);
+void		sort_three_or_five(t_stack *a, t_stack *b, int number);
 void			sort_a(t_stack *a, t_stack *b, int elements, int reorder);
 void			sort_b(t_stack *a, t_stack *b, int elements);
 int				sort_less_than_two_elements_a(t_stack *a, t_stack *b,

@@ -14,10 +14,9 @@ NAME_1 = checker
 NAME_2 = push_swap
 DIR_LIB = libft
 SRC = error.c args.c stack.c instructions.c operations.c \
-		sort.c subset.c clean.c content.c\
-		print_a_enlever.c # A ENLEVER
+			sort.c subset.c clean.c content.c print.c
 BINARIES = $(SRC:.c=.o)
-CC = gcc -g -Wall -Werror -Wextra #enlever le -g
+CC = gcc -Wall -Werror -Wextra #enlever le -g
 
 all: $(NAME_1) $(NAME_2)
 

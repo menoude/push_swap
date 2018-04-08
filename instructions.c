@@ -67,7 +67,7 @@ void	instructions_exec(t_stack *a, t_stack *b, char *new_instruct)
 	instructions_enqueue(a, b, new_instruct);
 }
 
-void		instructions_read(t_stack *a, t_stack *b)
+void		instructions_read(t_stack *a, t_stack *b, int verbose)
 {
 	char *instruct;
 
@@ -75,6 +75,11 @@ void		instructions_read(t_stack *a, t_stack *b)
 	while (get_next_line(0, &instruct) > 0)
 	{
 		instructions_exec(a, b, instruct);
+		if (verbose)
+		{
+			ft_printf("\n              %s\n", instruct);
+			print_stacks(a, b);
+		}
 		free(instruct);
 	}
 }

@@ -31,17 +31,3 @@ int		stack_peek(t_stack *stack)
 {
 	return (stack->nb[stack->size - 1]);
 }
-
-int		content_contains(t_stack *stack, int n)
-{
-	int i;
-
-	i = 0;
-	while (i < stack->size)
-	{
-		if (stack->nb[i] == n)
-			return (1);
-		i++;
-	}
-	return (0);
-}

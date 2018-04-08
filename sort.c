@@ -12,13 +12,30 @@
 
 #include "push_swap.h"
 
-void		sort_three_elements(t_stack *a, t_stack *b)
+void		sort_three_or_five(t_stack *a, t_stack *b, int number)
 {
-	while (!content_is_inverse_ordered(a))
+	if (number == 3)
 	{
-		if (a->nb[2] > a->nb[1] && a->nb[2] > a->nb[0])
-			instructions_exec(a, b, "ra");
-		else
+		while (!content_is_inverse_ordered(a))
+		{
+			if (a->nb[2] > a->nb[1] && a->nb[2] > a->nb[0])
+				instructions_exec(a, b, "ra");
+			else
+				instructions_exec(a, b, "sa");
+		}
+	}
+	else
+	{
+		number = subset_median(a->nb, 5, 2);
+		while (content_contains_lower(a, number))
+			if (stack_peek(a) < number)
+				instructions_exec(a, b, "pb");
+			else
+				instructions_exec(a, b, "ra");
+		sort_three_or_five(a, b, 3);
+		while (b->size)
+			instructions_exec(a, b, "pa");
+		if (stack_peek(a) > a->nb[3])
 			instructions_exec(a, b, "sa");
 	}
 }

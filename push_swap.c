@@ -25,7 +25,9 @@ int	main(int argc, char **argv)
 		args_check_multi(&a, &b, argv);
 	a.instructions = 0;
 	if (a.size == 3)
-		sort_three_elements(&a, &b);
+		sort_three_or_five(&a, &b, 3);
+	else if (a.size == 5)
+		sort_three_or_five(&a, &b, 5);
 	else
 		sort_a(&a, &b, a.size, 0);
 	clean_instructions(a.instructions);
