@@ -48,7 +48,6 @@ void	instructions_enqueue(t_stack *a, t_stack *b, char *new_instruct)
 	}
 }
 
-
 void	instructions_exec(t_stack *a, t_stack *b, char *new_instruct)
 {
 	if (ft_strequ(new_instruct, "sa") || ft_strequ(new_instruct, "sb")
@@ -67,7 +66,7 @@ void	instructions_exec(t_stack *a, t_stack *b, char *new_instruct)
 	instructions_enqueue(a, b, new_instruct);
 }
 
-void		instructions_read(t_stack *a, t_stack *b, int verbose)
+void	instructions_read(t_stack *a, t_stack *b, int verbose)
 {
 	char *instruct;
 

@@ -16,7 +16,7 @@ DIR_LIB = libft
 SRC = error.c args.c stack.c instructions.c operations.c \
 			sort.c subset.c clean.c content.c print.c
 BINARIES = $(SRC:.c=.o)
-CC = gcc -Wall -Werror -Wextra #enlever le -g
+CC = gcc -Wall -Werror -Wextra
 
 all: $(NAME_1) $(NAME_2)
 

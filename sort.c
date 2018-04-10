@@ -43,7 +43,7 @@ void		sort_three_or_five(t_stack *a, t_stack *b, int number)
 int			sort_less_than_two_elements_a(t_stack *a, t_stack *b,
 											int elements)
 {
- 	if (elements == 1 || elements == 2 || subset_inverse_ordered(a, elements))
+	if (elements == 1 || elements == 2 || subset_inverse_ordered(a, elements))
 	{
 		if (elements == 2 && stack_peek(a) > a->nb[a->size - 2])
 			instructions_exec(a, b, "sa");
@@ -55,7 +55,7 @@ int			sort_less_than_two_elements_a(t_stack *a, t_stack *b,
 int			sort_less_than_two_elements_b(t_stack *a, t_stack *b,
 											int elements)
 {
- 	if (elements == 1 || elements == 2 || subset_ordered(b, elements))
+	if (elements == 1 || elements == 2 || subset_ordered(b, elements))
 	{
 		if (elements == 2 && stack_peek(b) < b->nb[b->size - 2])
 			instructions_exec(a, b, "sb");
@@ -71,7 +71,7 @@ void		sort_a(t_stack *a, t_stack *b, int elements, int reorder)
 	int rotations;
 
 	if (sort_less_than_two_elements_a(a, b, elements))
-		return;
+		return ;
 	median = subset_median(a->nb + a->size - elements, elements, elements / 2);
 	transferts = 0;
 	rotations = 0;

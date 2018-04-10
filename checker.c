@@ -14,9 +14,9 @@
 
 int		main(int argc, char **argv)
 {
-	t_stack	a;
-	t_stack	b;
-	int verbose;
+	t_stack		a;
+	t_stack		b;
+	int			verbose;
 
 	verbose = argc > 2 && ft_strequ(argv[1], "-v");
 	if (argc < 2)

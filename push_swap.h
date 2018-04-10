@@ -52,7 +52,8 @@ int				content_is_inverse_ordered(t_stack *stack);
 
 void			instructions_read(t_stack *a, t_stack *b, int verbose);
 void			instructions_exec(t_stack *a, t_stack *b, char *new_instruct);
-void			instructions_enqueue(t_stack *a, t_stack *b, char *new_instruct);
+void			instructions_enqueue(t_stack *a, t_stack *b,
+									char *new_instruct);
 void			instructions_print(t_instruct *instructions);
 
 void			clean_instructions(t_instruct *instructions);
