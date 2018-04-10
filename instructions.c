@@ -18,8 +18,7 @@ void	instructions_print(t_instruct *instructions)
 		return ;
 	ft_putendl(instructions->instruction);
 	instructions_print(instructions->next);
-	free(instructions->instruction);
-	free(instructions);
+	clean_free_instruction(instructions);
 }
 
 void	instructions_enqueue(t_stack *a, t_stack *b, char *new_instruct)

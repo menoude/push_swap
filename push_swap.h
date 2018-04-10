@@ -60,6 +60,7 @@ void			clean_instructions(t_instruct *instructions);
 int				clean_wide_enough(t_instruct *instructions);
 int				clean_redundancy(char *s1, char *s2);
 char			*clean_mixable(char *s1, char *s2);
+void			clean_free_instruction(t_instruct *instructions);
 
 void			op_swap(t_stack *a, t_stack *b, char option);
 void			op_push(t_stack *a, t_stack *b, char option);

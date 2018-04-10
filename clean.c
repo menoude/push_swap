@@ -48,6 +48,12 @@ int		clean_wide_enough(t_instruct *instructions)
 	return (0);
 }
 
+void	clean_free_instruction(t_instruct *instructions)
+{
+	free(instructions->instruction);
+	free(instructions);
+}
+
 void	clean_instructions(t_instruct *instructions)
 {
 	t_instruct	*next;
@@ -63,14 +69,13 @@ void	clean_instructions(t_instruct *instructions)
 		&& clean_redundancy(next->instruction, next_next->instruction))
 	{
 		instructions->next = next_next->next;
-		free(next_next->instruction);
-		free(next_next);
+		clean_free_instruction(next);
+		clean_free_instruction(next_next);
 	}
-	if (clean_wide_enough(instructions)
+	else if (clean_wide_enough(instructions)
 		&& (new = clean_mixable(next->instruction, next_next->instruction)))
 	{
-		free(next->instruction);
-		free(next);
+		clean_free_instruction(next);
 		free(next_next->instruction);
 		next_next->instruction = new;
 		instructions->next = next_next;
