@@ -65,7 +65,7 @@ void			op_push(t_stack *a, t_stack *b, char option);
 void			op_rotate(t_stack *a, t_stack *b, char option);
 void			op_reverse_rotate(t_stack *a, t_stack *b, char option);
 
-void		sort_three_or_five(t_stack *a, t_stack *b, int number);
+void			sort_three_or_five(t_stack *a, t_stack *b, int number);
 void			sort_a(t_stack *a, t_stack *b, int elements, int reorder);
 void			sort_b(t_stack *a, t_stack *b, int elements);
 int				sort_less_than_two_elements_a(t_stack *a, t_stack *b,
